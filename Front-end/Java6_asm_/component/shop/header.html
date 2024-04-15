@@ -1,0 +1,64 @@
+<div class="main_menu" ng-controller="CartCtrl">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a title="TwoBee Shop" class="navbar-brand logo_h" href="#!/index"><img src="/assets/shop/images/logo.jpg"
+                    style="width: 50px; height: 50px; border-radius: 50%;" alt=""></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+                <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
+                    <li class="nav-item active"><a class="nav-link" href="#!/index">Trang chủ</a></li>
+                    <li class="nav-item submenu dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+                            aria-haspopup="true" aria-expanded="false" onclick="event.preventDefault()">Mua sắm</a>
+                        <ul class="dropdown-menu">
+                            <li class="nav-item"><a class="nav-link" href="#!/shop/category">Sản phẩm</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#!/shop/cart">Giỏ hàng</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item submenu dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+                            aria-haspopup="true" aria-expanded="false" onclick="event.preventDefault()">Bài viết</a>
+                        <ul class="dropdown-menu">
+                            <li class="nav-item"><a class="nav-link" href="#!/shop/blog">Trang bài viết</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#!/shop/single-blog">Blog
+                                    Details</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item submenu dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+                            aria-haspopup="true" aria-expanded="false" onclick="event.preventDefault()">Tài khoản</a>
+                        <ul class="dropdown-menu">
+                            <li class="nav-item"><a class="nav-link" href="#!/shop/login">Đăng nhập</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#!/shop/register">Đăng ký</a>
+                            <li class="nav-item"><a class="nav-link" href="#!/admin/forgot-password">Quên mật khẩu</a>
+                            </li>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#!/shop/confirmation">Theo dõi đơn
+                            hàng</a></li>
+                </ul>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="#!/shop/contact">Liên hệ</a></li>
+                </ul>
+
+                <ul class="nav-shop">
+                    <li class="nav-item"><button><i class="ti-search"></i></button></li>
+                    <li class="nav-item"><button><a href="#!/shop/cart"><i class="ti-shopping-cart"></i></a><span
+                                class="nav-shop__circle" id="nav-shop__circle">{{countCart}}</span></button> </li>
+                    <li class="nav-item"><button><a href="#!/shop/like"><i class="bi bi-chat-square-heart"></i></a><span
+                                class="nav-shop__circle" id="nav-like__circle">{{checkFavorites.length}}</span></button>
+                    </li>
+                    <li class="nav-item"> <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{userInfo.firstname
+                            +" "+
+                            userInfo.lastname}}</span><img class="img-profile rounded-circle ms-2" style="width: 30px;"
+                            src="../../assets/admin/img/undraw_profile.svg"></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>

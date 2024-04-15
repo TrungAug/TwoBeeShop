@@ -1,0 +1,449 @@
+<!-- ================ start banner area ================= -->
+<section class="blog-banner-area" id="category">
+    <img src="/assets/shop/images/home/240319_Voucher-Extra_Homepage_Top-Banner_Desktop.gif"
+        style="width: 100%;height:30px;" alt="">
+    <div class="container h-100 ">
+        <div class="blog-banner">
+            <div class="text-center">
+                <h1>Shopping Cart</h1>
+                <nav aria-label="breadcrumb" class="banner-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Shopping Cart</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ================ end banner area ================= -->
+
+
+
+<!--================Cart Area =================-->
+<section class="cart_area">
+    <div class="container" ng-controller="CartCtrl">
+        <div class="cart_inner">
+            <div class="table-responsive">
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                <form>
+                                    <input type="checkbox" id="checkAll" class=" mr-2" ng-model="checkAll">Sản phẩm
+                                </form>
+                            </th>
+                            <th scope="col" style="width: 170px;">Giá</th>
+                            <th scope="col">Số lượng</th>
+                            <th scope="col" style="width: 170px;">Tổng tiền</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-if="carts.length ==0">
+                            <td>
+                                <h1><a href="#">{{ContinueProduct}}</a></h1>
+                            </td>
+                        </tr>
+                        <tr ng-repeat="cart in carts">
+                            <td>
+                                <div class="media">
+                                    <div class="d-flex" ng-model="cart.product.productId" style="position: relative;">
+                                        <form class="mt-5 mr-2">
+                                            <input type="checkbox" class="checkbox" ng-change="updatePrice(cart)"
+                                                ng-model="options[ $index]" ng-value="cart.cartId">
+                                        </form>
+                                        <div ng-repeat="image in images">
+                                            <div ng-if="image.productImageId == cart.imageId">
+                                                <img style="width: 120px;"
+                                                    src="/assets/shop/images/product/{{image.imageName}}" alt="">
+                                            </div>
+                                        </div>
+
+                                        <div ng-repeat="discount in discounts">
+                                            <div style="position: absolute; top: 0; right: 30px; background-color: rgba(255, 0, 0, 0.7); color: white; padding: 5px;font-size: 10px;width: 50px;"
+                                                ng-if="discount.product.productId == cart.product.productId">
+                                                {{(cart.product.price- discount.discountedPrice)/cart.product.price *
+                                                100 | number:0}}% off
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="media-body" style="width: 350px;">
+                                        <h5><a ng-click="ProductClick(cart.product.productId)"
+                                                href="#!/shop/single-product/{{cart.product.productId}}"
+                                                style="color: #010101;">{{ cart.product.productName }} </a>
+                                        </h5>
+                                        <p>Thương hiệu:
+                                            <span style="color: #010101;" class="mr-5">{{cart.product.brand.nameBrand}}
+                                            </span>
+                                            <span style="color: #010101; float: right;"
+                                                ng-if="cart.product.gender == 'UNISEX'"><span
+                                                    style="color: #858796;">Loại:</span> Nam và
+                                                Nữ</span>
+                                            <span style="color: #010101; float: right;"
+                                                ng-if="cart.product.gender == 'MALE'"> <span
+                                                    style="color: #858796;">Loại:</span> Nam
+                                            </span>
+                                            <span style="color: #010101; float: right;"
+                                                ng-if="cart.product.gender == 'FEMALE'"> <span
+                                                    style="color: #858796;">Loại:</span> Nữ</span>
+                                        </p>
+                                        <p>Màu:
+                                            <span style="color: #010101;" ng-repeat="dtColor in detailsColor">
+                                                <span ng-if="dtColor.detailsColorId == cart.colorId">
+                                                    <!-- <span class="">{{dtColor.color.colorName}}</span> -->
+                                                    <span class="border rounded-circle" style="background-color:{{dtColor.color.colorName}} ;  display: inline-block;
+									width: 20px;
+									height: 20px;
+									margin-top: 25px; ">
+                                                        <div class="model-overlay" id="{{cart.cartId}}_color">
+                                                            <div class="model"><span class="close"
+                                                                    ng-click="closeModel(cart.cartId)">&times;</span>
+                                                                <div class="model-header">
+
+                                                                    <h2> {{cart.product.productName}}</h2>
+                                                                </div>
+                                                                <div class="model-content">
+                                                                    <h3>Chọn màu sản phẩm</h3>
+                                                                    <div class="row">
+                                                                        <div ng-repeat="dtColor in detailsColor">
+                                                                            <div
+                                                                                ng-if="dtColor.product.productId == cart.product.productId">
+                                                                                <input type="radio"
+                                                                                    ng-checked="cart.colorId == dtColor.detailsColorId"
+                                                                                    ng-model="selectedColor[dtColor.product.productId]"
+                                                                                    name="color"
+                                                                                    ng-value="{{dtColor.detailsColorId}}">
+                                                                                {{dtColor.color.colorName}}
+                                                                                <div ng-repeat="image in images">
+                                                                                    <div
+                                                                                        ng-if="image.productImageId == dtColor.imageId">
+                                                                                        <img style="width: 90px; margin-top: 20px ;margin-right: 20px;"
+                                                                                            src="/assets/shop/images/product/{{image.imageName}}"
+                                                                                            class="mb-3"
+                                                                                            alt="Đang chờ cập nhật hình ảnh">
+
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <button class="btn btn-primary mt-4"
+                                                                        ng-click="discolor(cart)">Xác
+                                                                        nhận</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <span style="float: right;">Chọn màu: <i
+                                                                ng-click="openModel(cart.cartId)"
+                                                                class="bi bi-pencil-square"></i></span>
+                                                    </span>
+                                                    <!-- Model -->
+                                                </span>
+                                        </p>
+                                        <p>Kích thước:
+                                            <span style="color: #010101;" ng-repeat="dtSize in detailsSize">
+                                                <span ng-if="dtSize.detailsSizeId == cart.sizeId">
+                                                    {{dtSize.size.sizeName}}
+                                                    <div class="model-overlay" id="{{cart.cartId}}_size">
+                                                        <div class="model">
+                                                            <span class="close"
+                                                                ng-click="closeModelSize(cart.cartId)">&times;</span>
+                                                            <div class="model-header">
+
+                                                                <h2> {{cart.product.productName}}</h2>
+                                                            </div>
+                                                            <div class="model-content">
+                                                                <h3>Chọn kích thước sản phẩm</h3>
+
+                                                                <div class="row">
+                                                                    <div ng-repeat="dtSize in detailsSize">
+                                                                        <div class="mr-3"
+                                                                            ng-if="dtSize.product.productId == cart.product.productId">
+                                                                            <input type="radio" class=""
+                                                                                ng-model="selectedSize[dtSize.product.productId]"
+                                                                                name="size"
+                                                                                ng-checked="cart.sizeId == dtSize.detailsSizeId"
+                                                                                value="{{dtSize.detailsSizeId}}">
+                                                                            Size: {{dtSize.size.sizeName}}
+                                                                            <div ng-repeat="image in images">
+                                                                                <div
+                                                                                    ng-if="image.productImageId == cart.imageId">
+                                                                                    <img style="width: 100px; margin-top: 20px; margin-right: 20px;"
+                                                                                        class="mb-3"
+                                                                                        src="/assets/shop/images/product/{{image.imageName}}"
+                                                                                        alt="Đang chờ cập nhật hình ảnh">
+
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <button class="btn btn-primary"
+                                                                    ng-click="dissize(cart)">Xác
+                                                                    nhận </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <span style="float: right;">Chọn size: <i
+                                                            ng-click="openModelSize(cart.cartId)"
+                                                            class="bi bi-pencil-square"></i></span>
+                                                </span>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <span ng-repeat="favorite in favorites">
+                                    <span ng-if="cart.product.productId === favorite.productId.productId">
+                                        <button class="btn btn-primary">
+                                            <i class="bi bi-heart-fill"
+                                                ng-click="removeFromFavorites1(cart.product.productId)"></i></button>
+                                    </span>
+                                </span>
+                                <span ng-if="!isFavorite(cart.product.productId)">
+                                    <button class="btn btn-primary"><i class="bi bi-heart"
+                                            ng-click="addToFavorites1(cart.product.productId)"></i></button>
+                                </span>
+                            </td>
+                            <td>
+                                <p>
+                                    <span ng-if="!isDiscounted(cart.product.productId)">
+                                        Giá gốc: <span style="color: #010101;">{{ cart.product.price | number :
+                                            fractionSize }} VNĐ</span>
+                                    </span>
+                                    <span ng-if="isDiscounted(cart.product.productId)"
+                                        style="text-decoration: line-through;">
+                                        Giá gốc: <br>{{ cart.product.price | number : fractionSize }} VNĐ
+                                    </span>
+                                </p>
+                                <div ng-repeat="discount in discounts">
+                                    <div ng-if="discount.product.productId == cart.product.productId">
+                                        Giá còn:<br> <span style="color: #010101;"> {{
+                                            discount.discountedPrice | number :
+                                            fractionSize }} VNĐ</span>
+                                        <div class="mt-3"></div>
+                                        Tiết kiệm được:<br> <span style="color: #010101;">{{cart.product.price -
+                                            discount.discountedPrice| number :
+                                            fractionSize }} VNĐ</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="product_count">
+                                    <input type="number" name="qty" id="sst" ng-model="cart.quantity"
+                                        ng-change="updatePrice(cart)" ng-blur="updatePrice(cart)" title="Quantity:"
+                                        class="input-number qty">
+                                    <button class="increase items-count" type="button"
+                                        ng-click="incrementQuantity(cart)"><i class="bi bi-caret-up-fill"></i></button>
+                                    <button class="reduced items-count" type="button"
+                                        ng-click="decrementQuantity(cart)"><i
+                                            class="bi bi-caret-down-fill"></i></button>
+                                </div>
+                            </td>
+                            <td>
+                                <h5 style="color: red;">{{ calculateTotalPrice(cart) | number : fractionSize}} VNĐ</h5>
+
+                            </td>
+                            <td><i class="bi bi-trash" ng-click="deleteCart(cart)"></i></td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">
+                                <div class="shipping_box">
+                                    <h2>Mã giảm giá cho tất cả</h2>
+                                    <!-- <div class="row">
+                                        <div ng-repeat="voucher in vouchers">
+                                            <div class="mb-3">
+                                                <div ng-if="voucher.type ==='ALL'">
+                                                    <div class="card mr-2" style="width:240px;height: 330px;">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title text-danger">Mã: <span
+                                                                    class="btn btn-secondary"
+                                                                    id="{{voucher.voucherName}}">{{voucher.voucherName}}</span>
+                                                            </h5>
+                                                            <h4>Giảm: {{voucher.condition | number : fractionSize}} VNĐ
+                                                            </h4>
+                                                            <p class="card-text">{{voucher.description}}</p>
+                                                            <p>Áp dụng từ ngày: {{voucher.expirationDate |date}}</p>
+                                                            <p>Ngày hết hạn: {{voucher.effectiveDate |date}}</p>
+                                                            <button class="btn btn-warning"
+                                                                ng-click="copyVoucher(voucher.voucherName)">Sao
+                                                                chép</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <h2>Mã giảm giá phần trăm</h2>
+                                    <!-- <div class="row">
+                                        <div ng-repeat="voucher in vouchers">
+                                            <div class=" mb-3" style="float: left;">
+                                                <div ng-if="voucher.type ==='PT'">
+                                                    <div class="card mr-2" style="width:240px;height: 330px;">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title text-danger">Mã: <span
+                                                                    class="btn btn-secondary"
+                                                                    id="{{voucher.voucherName}}">{{voucher.voucherName}}</span>
+                                                            </h5>
+                                                            <h4>Giảm: {{voucher.amountPercentage }} %
+                                                            </h4>
+                                                            <p class="card-text">{{voucher.description}}</p>
+                                                            <p>Áp dụng từ ngày: {{voucher.expirationDate |date}}</p>
+                                                            <p>Ngày hết hạn: {{voucher.effectiveDate |date}}</p>
+                                                            <button class="btn btn-warning"
+                                                                ng-click="copyVoucher(voucher.voucherName)">Sao
+                                                                chép</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <h2>Mã giảm giá tiền</h2>
+                                    <!-- <div class="row">
+                                        <div ng-repeat="voucher in vouchers">
+                                            <div class=" mb-3">
+                                                <div ng-if="voucher.type ==='TM'">
+                                                    <div class="card mr-2" style="width:240px;height: 330px;">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title text-danger">Mã: <span
+                                                                    class="btn btn-secondary"
+                                                                    id="{{voucher.voucherName}}">{{voucher.voucherName}}</span>
+                                                            </h5>
+                                                            <h4>Giảm: {{voucher.condition | number : fractionSize}} VNĐ
+                                                            </h4>
+                                                            <p class="card-text">{{voucher.description}}</p>
+                                                            <p>Áp dụng từ ngày: {{voucher.expirationDate |date}}</p>
+                                                            <p>Ngày hết hạn: {{voucher.effectiveDate |date}}</p>
+                                                            <button class="btn btn-warning"
+                                                                ng-click="copyVoucher(voucher.voucherName)">Sao
+                                                                chép</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="bottom_button">
+                            <td>
+                                <!-- <a class="button" href="#">Update Cart</a> -->
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+                                <!-- <div class="cupon_text d-flex" style="float: right;">
+                                    <input type="text" style="color: rgb(3, 3, 3);" ng-model="voucherName"
+                                        placeholder="Nhập mã giảm giá">
+                                    <button class="primary-btn" ng-click="apply()">Apply</button>
+                                    <a class="button" href="#">Have a Coupon?</a>
+                                </div> -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h4>Miễn phí giao hàng cho đơn hàng từ 3,000,000 VNĐ</h4>
+                                <h4>Giảm 50k cho đơn hàng từ 599,000 VNĐ</h4>
+                                <h4>Giảm 80k cho đơn hàng từ 999,000 VNĐ</h4>
+                                <h4>Giảm 150k cho đơn hàng từ 3,000,000 VNĐ</h4>
+                            </td>
+                            <td>
+
+                            </td>
+                            <td colspan="2">
+                                <h5 style="color: red; margin: 0;">Tạm tính: <span style="float: right;">{{
+                                        totalCartValue | number : fractionSize}} VNĐ</span></h5>
+                                <h5 class="mt-4">Phí giao hàng: <span
+                                        style="float: right;color: #010101;">{{freeShip}}</span></h4>
+                                    <h5 class="mt-4">{{discountTitle}} <span
+                                            style="float: right;color: #010101;">{{discount}}</span>
+                                    </h5>
+                                    <hr>
+                                    <h5 class="mt-4" style="color: red; margin: 0;">Tổng tiền: <span
+                                            style="float: right;">{{ totalCartAll | number : fractionSize}} VNĐ</span>
+                                    </h5>
+                            </td>
+                        </tr>
+                        <tr class="shipping_area">
+                            <td colspan="2">
+                                <h1>Khuyến mãi sự kiện</h1>
+                                <!-- <div class="row">
+                                    <div ng-repeat="voucher in vouchers">
+                                        <div class=" mb-3">
+                                            <div ng-if="voucher.type ==='EVENT'">
+                                                <div class="card mr-2" style="width:240px;height: 330px;">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title text-danger">Mã: <span
+                                                                class="btn btn-secondary"
+                                                                id="{{voucher.voucherName}}">{{voucher.voucherName}}</span>
+                                                        </h5>
+                                                        <h4>Giảm: {{voucher.condition | number : fractionSize}} VNĐ
+                                                        </h4>
+                                                        <p class="card-text">{{voucher.description}}</p>
+                                                        <p>Áp dụng từ ngày: {{voucher.expirationDate |date}}</p>
+                                                        <p>Ngày hết hạn: {{voucher.effectiveDate |date}}</p>
+                                                        <button class="btn btn-warning"
+                                                            ng-click="copyVoucher(voucher.voucherName)">Sao
+                                                            chép</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </td>
+
+                            <td>
+
+                            </td>
+                            <td colspan="3">
+                                <h4 class="mt-5">Sự kiện sắp diễn ra</h4>
+                                <form action="">
+                                    <div ng-repeat="voucher in vouchers">
+                                        <div ng-if="voucher.type =='EVENT'">
+                                            {{voucher.event}}
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </td>
+                        </tr>
+                        <tr class="out_button_area">
+                            <td class="d-none-l">
+
+                            </td>
+                            <td class="">
+
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+                                <span class="checkout_btn_inner">
+                                    <a class="btn btn-primary mr-5" href="/index.html#!/shop/category">Tiếp tục mua
+                                        sắm</a>
+                                    <a class="btn btn-warning" style="margin-left: 120px;"
+                                        href="/index.html#!/shop/checkout">Tiến hành thanh
+                                        toán
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!--================End Cart Area =================-->
+<!--================ Start footer Area  =================-->
